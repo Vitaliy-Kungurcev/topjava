@@ -11,7 +11,7 @@ public class UserMeal {
 
     public UserMeal(LocalDateTime dateTime, String description, int calories) {
         this.dateTime = dateTime;
-        this.description = description;
+        this.description = description; //описание
         this.calories = calories;
     }
 
@@ -25,5 +25,14 @@ public class UserMeal {
 
     public int getCalories() {
         return calories;
+    }
+
+    @Override
+    public String toString() {
+        return "UserMeal{" +
+                "dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                '}';
     }
 }
