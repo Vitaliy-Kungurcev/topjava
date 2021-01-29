@@ -2,12 +2,10 @@ package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExcess;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class UserMealsUtil {
@@ -56,7 +54,7 @@ public class UserMealsUtil {
         Map<Integer, Integer> maps = new HashMap<>();
 
         meals.forEach(element -> maps.merge(element.getDateTime().getDayOfYear(), element.getCalories(), Integer::sum));
-
+   //    Без forEach решить не смог. Можно через map,вроде понимаю как. Но в моем случае код увеличивается,нежели через forEach.
         meals.stream().filter(el -> el.getDateTime().toLocalTime().isAfter(startTime) && el.getDateTime().toLocalTime().isBefore(endTime)).
                 forEach(el -> {
                     if (maps.containsKey(el.getDateTime().getDayOfYear()) && (maps.get(el.getDateTime().getDayOfYear()) <= caloriesPerDay)) {
