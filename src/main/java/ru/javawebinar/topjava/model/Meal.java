@@ -46,7 +46,7 @@ public class Meal {
 
     @Override
     public String toString() {
-        return "UserMeal{" +
+        return "Meal{" +
                 "dateTime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
@@ -65,13 +65,4 @@ public class Meal {
         return id == null;
     }
 
-    @Override
-    public String toString() {
-        return "Meal{" +
-                "id=" + id +
-                ", dateTime=" + dateTime +
-                ", description='" + description + '\'' +
-                ", calories=" + calories +
-                '}';
-    }
 }
