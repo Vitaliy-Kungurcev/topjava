@@ -20,7 +20,7 @@ import java.util.Objects;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
-public class MealServlet extends HttpServlet {
+
 public class MealServlet extends HttpServlet {
 
     private ConfigurableApplicationContext springContext;
