@@ -14,14 +14,14 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class JpaUserRepository implements UserRepository {
 
-/*
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    private Session openSession() {
-        return sessionFactory.getCurrentSession();
-    }
-*/
+///*
+//    @Autowired
+//    private SessionFactory sessionFactory;
+//
+//    private Session openSession() {
+//        return sessionFactory.getCurrentSession();
+//    }
+//*/
 
     @PersistenceContext
     private EntityManager em;
