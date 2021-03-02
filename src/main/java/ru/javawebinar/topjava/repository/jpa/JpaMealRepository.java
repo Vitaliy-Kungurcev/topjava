@@ -24,11 +24,12 @@ public class JpaMealRepository implements MealRepository {
             em.persist(meal);
             return meal;
         } else {
-            Meal mealFind = em.find(Meal.class, meal.id());
-            if (mealFind.getUser().getId() != userId) {
-                return null;
+           Meal getMeal= get(meal.getId(),userId);
+           if((getMeal==null)||(getMeal.getUser().id() != userId)){
+               return null;
             } else {
-                meal.setUser(em.find(User.class, userId));
+                User ref = em.getReference(User.class, userId);
+                meal.setUser(ref);
                 return em.merge(meal);
             }
         }
@@ -44,7 +45,7 @@ public class JpaMealRepository implements MealRepository {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Meal get(int id, int userId) {
         Meal meal = em.find(Meal.class, id);
         if (meal == null) {
@@ -64,6 +65,7 @@ public class JpaMealRepository implements MealRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return em.createNamedQuery(Meal.GETDATETIME, Meal.class)
                 .setParameter("user_id", userId)

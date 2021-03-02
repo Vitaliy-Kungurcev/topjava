@@ -1,7 +1,11 @@
 package ru.javawebinar.topjava.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -14,26 +18,30 @@ import java.time.LocalTime;
 })
 
 @Entity
-@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = "date_Time")})
+@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = "date_Time", name = "meals_unique_user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {
 
     public static final String DELETE = "Meal.delete";
     public static final String GET_ALL = "Meal.getAll";
     public static final String GETDATETIME = "Meal.get";
 
-    @Column(name = "date_time")
+    @Column(name = "date_time", nullable = false,unique = true)
     @NotNull
     private LocalDateTime dateTime;
 
-    @Column(name = "description")
-    @NotNull
+    @Column(name = "description", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 120)
     private String description;
 
-    @Column(name = "calories")
-    @NotNull
+    @Column(name = "calories", nullable = false)
+    @Range(min = 5, max = 5000)
     private int calories;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @NotNull
+    @JoinColumn(name = "user_id" )
     private User user;
 
     public Meal() {

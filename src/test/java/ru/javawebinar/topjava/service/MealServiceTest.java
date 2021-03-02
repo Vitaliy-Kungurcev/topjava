@@ -34,7 +34,7 @@ public class MealServiceTest {
     private MealService service;
 
     @Test
-    @Transactional
+
     public void delete() {
         service.delete(MEAL1_ID, USER_ID);
         assertThrows(NotFoundException.class, () ->
@@ -43,8 +43,7 @@ public class MealServiceTest {
 
     @Test
     public void deleteNotFound() {
-        service.delete(MEAL1_ID, USER_ID);
-        assertThrows(NotFoundException.class, () -> service.get(MEAL1_ID, USER_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, USER_ID));
     }
 
     @Test
@@ -53,7 +52,7 @@ public class MealServiceTest {
     }
 
     @Test
-    @Transactional
+
     public void create() {
         Meal created = service.create(getNew(), USER_ID);
         int newId = created.id();
@@ -70,7 +69,7 @@ public class MealServiceTest {
     }
 
     @Test
-    @Transactional
+
     public void get() {
         Meal actual = service.get(ADMIN_MEAL_ID, ADMIN_ID);
         actual.setUser(null);
@@ -88,7 +87,7 @@ public class MealServiceTest {
     }
 
     @Test
-    @Transactional
+
     public void update() {
         Meal updated = getUpdated();
         service.update(updated, USER_ID);
@@ -98,7 +97,7 @@ public class MealServiceTest {
     }
 
     @Test
-    @Transactional
+
     public void updateNotOwn() {
         assertThrows(NotFoundException.class, () -> service.update(meal1, ADMIN_ID));
         Meal meal = service.get(MEAL1_ID, USER_ID);
@@ -117,14 +116,22 @@ public class MealServiceTest {
 
     @Test
     public void getBetweenInclusive() {
-        MEAL_MATCHER.assertMatch(service.getBetweenInclusive(
+        List<Meal> getBetweenInclusive = service.getBetweenInclusive(
                 LocalDate.of(2020, Month.JANUARY, 30),
-                LocalDate.of(2020, Month.JANUARY, 30), USER_ID),
+                LocalDate.of(2020, Month.JANUARY, 30), USER_ID);
+        for (Meal meals : getBetweenInclusive) {
+            meals.setUser(null);
+        }
+        MEAL_MATCHER.assertMatch(getBetweenInclusive,
                 meal3, meal2, meal1);
     }
 
     @Test
     public void getBetweenWithNullDates() {
-        MEAL_MATCHER.assertMatch(service.getBetweenInclusive(null, null, USER_ID), meals);
+        List<Meal> getBetweenWithNullDates = service.getBetweenInclusive(null, null, USER_ID);
+        for (Meal meals : getBetweenWithNullDates) {
+            meals.setUser(null);
+        }
+        MEAL_MATCHER.assertMatch(getBetweenWithNullDates, meals);
     }
 }
