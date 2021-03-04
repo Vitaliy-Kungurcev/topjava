@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.service;
 
+<<<<<<< HEAD
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -11,20 +12,34 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ActiveProfiles;
+=======
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+>>>>>>> origin/master
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+<<<<<<< HEAD
 import ru.javawebinar.topjava.Profiles;
+=======
+>>>>>>> origin/master
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+<<<<<<< HEAD
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertThrows;
 import static org.slf4j.LoggerFactory.getLogger;
+=======
+
+import static org.junit.Assert.assertThrows;
+>>>>>>> origin/master
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
@@ -35,6 +50,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
+<<<<<<< HEAD
 @ActiveProfiles(resolver = Profiles.ActiveDbProfileResolver.class)
 public class MealServiceTest {
     private static final Logger log = getLogger("result");
@@ -51,10 +67,14 @@ public class MealServiceTest {
             log.info(result + " ms\n");
         }
     };
+=======
+public class MealServiceTest {
+>>>>>>> origin/master
 
     @Autowired
     private MealService service;
 
+<<<<<<< HEAD
     @AfterClass
     public static void printResult() {
         log.info("\n---------------------------------" +
@@ -64,6 +84,8 @@ public class MealServiceTest {
                 "\n---------------------------------");
     }
 
+=======
+>>>>>>> origin/master
     @Test
     public void delete() {
         service.delete(MEAL1_ID, USER_ID);
@@ -83,7 +105,11 @@ public class MealServiceTest {
     @Test
     public void create() {
         Meal created = service.create(getNew(), USER_ID);
+<<<<<<< HEAD
         int newId = created.id();
+=======
+        int newId = created.getId();
+>>>>>>> origin/master
         Meal newMeal = getNew();
         newMeal.setId(newId);
         MEAL_MATCHER.assertMatch(created, newMeal);
@@ -122,8 +148,12 @@ public class MealServiceTest {
 
     @Test
     public void updateNotOwn() {
+<<<<<<< HEAD
         NotFoundException exception = assertThrows(NotFoundException.class, () -> service.update(meal1, ADMIN_ID));
         Assert.assertEquals("Not found entity with id=" + MEAL1_ID, exception.getMessage());
+=======
+        assertThrows(NotFoundException.class, () -> service.update(meal1, ADMIN_ID));
+>>>>>>> origin/master
         MEAL_MATCHER.assertMatch(service.get(MEAL1_ID, USER_ID), meal1);
     }
 
